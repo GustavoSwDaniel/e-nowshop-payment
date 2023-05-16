@@ -10,8 +10,8 @@ class PixPayment(IOrder, ABC):
     def __init__(self):
         self.payment = Pix()
 
-    def create_order(self, order_data: Dict):
-        response = self.payment.create_order(order_data=order_data)
+    def create_order(self, order_data: Dict, access_key: str):
+        response = self.payment.create_order(order_data=order_data, access_key=access_key)
         return OrderPixCreated(id=response['id'],
                                qrcode_text=response['point_of_interaction']['transaction_data']['qr_code'],
                                qrcode=response['point_of_interaction']['transaction_data']['qr_code_base64'],

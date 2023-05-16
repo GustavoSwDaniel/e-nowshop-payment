@@ -13,14 +13,13 @@ from enowshop_payment.providers.payment_interface import IPayment
 class Pix(IPayment, ABC):
     def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
-        self.pix_mercado_pago_url = ''
-        self.access_key = ''
+        self.pix_mercado_pago_url =  'https://api.mercadopago.com'
         self.__headers = {
-          'Authorization': 'Bearer ' + self.access_key,
           'Content-Type': 'application/json'
         }
 
-    def create_order(self, order_data) -> Dict:
+    def create_order(self, order_data, access_key: str) -> Dict:
+        self.__headers['Authorization'] = 'Bearer ' + access_key
         order = {
             "transaction_amount": order_data['total_value'],
             "description": "Título do produto",
@@ -39,7 +38,7 @@ class Pix(IPayment, ABC):
         response = requests.post(url, headers=self.__headers, data=json.dumps(order))
 
         if response.status_code != 201:
-            self.logger.info(f"Error in create order - order uuid [{order_data['order_uuid']}]")
+            self.logger.info(f"Error in create order")
             raise PaymentException('Error in create order' + response.text)
 
         return response.json()

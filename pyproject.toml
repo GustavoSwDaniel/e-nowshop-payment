@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "e-nowshop-payment"
-version = "0.1.2"
+version = "0.1.4"
 description = ""
 authors = ["gustavodanielsw <gustavodanieldetoledo@gmail.com>"]
 
