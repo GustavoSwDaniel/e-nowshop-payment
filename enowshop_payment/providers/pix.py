@@ -43,7 +43,8 @@ class Pix(IPayment, ABC):
 
         return response.json()
 
-    def get_order_by_uuid(self, order_id: int) -> Dict:
+    def get_order_by_uuid(self, order_id: str, access_key: str) -> Dict:
+        self.__headers['Authorization'] = 'Bearer ' + access_key
         url = f'{self.pix_mercado_pago_url}/v1/payments/{order_id}'
         response = requests.get(url, headers=self.__headers)
 

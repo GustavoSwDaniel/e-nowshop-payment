@@ -17,5 +17,7 @@ class PixPayment(IOrder, ABC):
                                qrcode=response['point_of_interaction']['transaction_data']['qr_code_base64'],
                                instalments=response['installments'])
 
-    def get_order(self, order_id: int):
-        raise  NotImplementedError
+    def get_order(self, order_id: str, access_key: str):
+        response = self.payment.get_order_by_uuid(order_id=order_id, access_key=access_key)
+        return response
+
